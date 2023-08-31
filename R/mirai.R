@@ -1236,6 +1236,51 @@ print.miraiError <- function(x, ...) {
 
 }
 
+#' @export
+#'
+makeMiraiCluster <- function(n, ...) {
+
+  is.numeric(n) || stop("'n' should be the integer cluster size")
+  daemons(n = n, dispatcher = FALSE)
+  cl <- vector(mode = "list", length = n)
+  for (i in seq_along(cl))
+    cl[[i]] <- `class<-`(new.env(), "miraiNode")
+  class(cl) <- c("miraiCluster", "cluster")
+  cl
+
+}
+
+#' @method stopCluster miraiCluster
+#' @export
+#'
+stopCluster.miraiCluster <- function(cl) {
+
+  daemons(0L)
+
+}
+
+#' @method sendData miraiNode
+#' @export
+#'
+sendData.miraiNode <- function(node, data) {
+
+  data <- data[["data"]]
+  fun <- data[["fun"]]
+  args <- data[["args"]]
+  node[["mirai"]] <- mirai(do.call(fun, args), fun = fun, args = args)
+
+}
+
+#' @method recvData miraiNode
+#' @export
+#'
+recvData.miraiNode <- function(node) {
+
+  m <- call_mirai(node[["mirai"]])
+  list(value = .subset2(m, "data"))
+
+}
+
 # internals --------------------------------------------------------------------
 
 parse_dots <- function(...)

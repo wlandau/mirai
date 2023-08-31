@@ -53,6 +53,7 @@
 #'     recv_aio_signal request request_signal send send_aio sha1 socket stat
 #'     stop_aio strcat tls_config unresolved until wait weakref weakref_value
 #'     write_cert
+#' @importFrom parallel recvData sendData stopCluster
 #'
 #' @docType package
 #' @name mirai-package
