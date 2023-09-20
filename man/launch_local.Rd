@@ -76,6 +76,11 @@ If daemons have been set, the generated command will automatically
     contain the argument 'rs' specifying the length 7 L'Ecuyer-CMRG random
     seed supplied to the daemon. The values will be different each time the
     function is called.
+
+    When using dispatcher with daemons that have exited after reaching
+    'maxtasks' or 'walltime', \code{\link{saisei}} should always be called to
+    regenerate the relevant URL prior to re-launching, as the previous one
+    would have expired.
 }
 \section{Additional arguments}{
 

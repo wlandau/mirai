@@ -870,6 +870,11 @@ daemons <- function(n, url = NULL, dispatcher = TRUE, seed = NULL, tls = NULL, p
 #'     task that consistently hangs or crashes to prevent it from failing
 #'     repeatedly when new daemons connect.
 #'
+#'     This function should be called prior to re-launching daemon instances
+#'     that have exited after reaching 'maxtasks' or 'walltime', as the listener
+#'     at the respective socket will have been closed and the existing URL no
+#'     longer valid.
+#'
 #' @examples
 #' if (interactive()) {
 #' # Only run examples in interactive R sessions
@@ -1007,6 +1012,11 @@ status <- function(.compute = "default") {
 #'     contain the argument 'rs' specifying the length 7 L'Ecuyer-CMRG random
 #'     seed supplied to the daemon. The values will be different each time the
 #'     function is called.
+#'
+#'     When using dispatcher with daemons that have exited after reaching
+#'     'maxtasks' or 'walltime', \code{\link{saisei}} should always be called to
+#'     regenerate the relevant URL prior to re-launching, as the previous one
+#'     would have expired.
 #'
 #' @examples
 #' if (interactive()) {

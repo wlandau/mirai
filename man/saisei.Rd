@@ -33,6 +33,11 @@ When a URL is regenerated, the listener at the specified socket is
     returned as an errorValue 7 'Object closed'. This may be used to cancel a
     task that consistently hangs or crashes to prevent it from failing
     repeatedly when new daemons connect.
+
+    This function should be called prior to re-launching daemon instances
+    that have exited after reaching 'maxtasks' or 'walltime', as the listener
+    at the respective socket will have been closed and the existing URL no
+    longer valid.
 }
 \examples{
 if (interactive()) {
