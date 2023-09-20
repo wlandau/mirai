@@ -356,11 +356,9 @@ dispatcher <- function(host, url = NULL, n = NULL, asyncdial = FALSE,
           if (is.object(req)) req <- serialize(req, NULL)
           send(queue[[i]][["ctx"]], data = req, mode = 2L)
           q <- queue[[i]][["daemon"]]
-          if (req[1L] == .seven) {
-            close(attr(servers[[i]], "listener")[[1L]])
-          } else {
-            serverfree[q] <- TRUE
-          }
+          if (req[1L] == .seven)
+            close(attr(servers[[i]], "listener")[[1L]]) else
+              serverfree[q] <- TRUE
           complete[q] <- complete[q] + 1L
           ctx <- .context(sock)
           req <- recv_aio_signal(ctx, cv = cv, mode = 8L)
